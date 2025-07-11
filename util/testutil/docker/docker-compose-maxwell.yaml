@@ -1,0 +1,38 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: test
+    command:
+      - --log-bin=mysql-bin
+      - --binlog-format=ROW
+      - --server-id=1
+      - --binlog_row_image=FULL
+    ports:
+      - "3306:3306"
+
+  kafka:
+    image: bitnami/kafka:3.4
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
+  maxwell:
+    image: zendesk/maxwell:latest
+    container_name: maxwell
+    environment:
+      - MAXWELL_PRODUCER=kafka
+      - MAXWELL_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      - MAXWELL_KAFKA_TOPIC=kafka-binlog-topic
+      - MAXWELL_HOST=mysql
+      - MAXWELL_USER=root
+      - MAXWELL_PASSWORD=123456
+      - MAXWELL_SCHEMA_HOST=mysql
+    depends_on:
+      - mysql
+      - kafka

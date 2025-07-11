@@ -1,0 +1,32 @@
+services:
+#  canal-admin:
+#    image: canal/canal-admin:v1.1.5
+#    container_name: canal-admin
+#    ports:
+#      - "8089:8089"
+#    environment:
+#      - server.port=8089
+#      - spring.datasource.url=jdbc:mysql://localhost:13306/?useSSL=false
+#      - spring.datasource.username=root
+#      - spring.datasource.password=$123456
+#    depends_on:
+#      mysql-master:
+#        condition: service_healthy
+#    networks:
+#      - canal-net
+
+  canal-server:
+    platform: linux/amd64
+    image: canal/canal-server:v1.1.5
+    container_name: canal-server
+    ports:
+      - "11111:11111"
+    environment:
+      CANAL_INSTANCE_MYSQL_HOST: "mysql"
+      CANAL_INSTANCE_MYSQL_PORT: "13306"  # 直接连接容器内部端口
+      CANAL_INSTANCE_DB_USERNAME: "root"
+      CANAL_INSTANCE_DB_PASSWORD: "123456"
+      CANAL_MQ_TOPIC: "kafka-binlog-topic"
+      CANAL_MQ_SERVERS: "home-kafka-1:9092"
+    volumes:
+      - ./canal/conf:/home/admin/canal-server/conf

@@ -1,0 +1,13 @@
+server:
+  port: 8080
+  timeout: 30s
+redis:
+  host: "127.0.0.1:6379"
+es:
+  host: "http://localhost:9200"
+mysql:
+  host:
+  port: 6606
+  user:
+  password:
+  db:
