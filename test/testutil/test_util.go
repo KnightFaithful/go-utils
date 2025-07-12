@@ -8,8 +8,6 @@ import (
 )
 
 type NewContextRequest struct {
-	Host   string
-	Cookie string
 }
 
 type ContextKey string

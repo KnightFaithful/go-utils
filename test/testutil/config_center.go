@@ -18,11 +18,9 @@ var (
 func initConfig(ctx context.Context) {
 	doOnce.Do(func() {
 		initConfPath(ctx)
-		env := GetEnv(ctx)
-		cid := GetCid(ctx)
-		viper.SetConfigName("config")                                      // 文件名（不带扩展名）
-		viper.SetConfigType("yaml")                                        // 文件类型
-		viper.AddConfigPath(strings.Join([]string{"conf", env, cid}, "/")) // 搜索路径
+		viper.SetConfigName("config")                            // 文件名（不带扩展名）
+		viper.SetConfigType("yaml")                              // 文件类型
+		viper.AddConfigPath(strings.Join([]string{"conf"}, "/")) // 搜索路径
 
 		if err := viper.ReadInConfig(); err != nil {
 			panic(fmt.Errorf("读取配置失败: %w", err))
@@ -31,12 +29,10 @@ func initConfig(ctx context.Context) {
 }
 
 func initConfPath(ctx context.Context) {
-	env := GetEnv(ctx)
-	cid := GetCid(ctx)
 	pwd, _ := os.Getwd()
-	homePath := pwd[0:strings.LastIndex(pwd, "go-util")] + "go-util"
+	homePath := pwd[0:strings.LastIndex(pwd, "go-utils")] + "go-utils"
 	if _, fErr := fileutil.CopyFile(
-		filepath.Join(homePath, "util/testutil/conf", env, cid, "config.yaml"), filepath.Join(pwd, "conf", env, cid, "config.yaml")); fErr != nil {
+		filepath.Join(homePath, "test/testutil/conf", "config.yaml"), filepath.Join(pwd, "conf", "config.yaml")); fErr != nil {
 		fmt.Println("copy chassis.yaml fail")
 		panic(fErr)
 	}

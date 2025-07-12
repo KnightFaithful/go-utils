@@ -7,11 +7,7 @@ import (
 	"testing"
 )
 
-var ctx = testutil.NewContext(testutil.NewContextRequest{
-	Host:   "",
-	Cookie: "",
-	Cid:    "ID",
-})
+var ctx = testutil.NewContext(testutil.NewContextRequest{})
 
 func DateFormatStrToTimeStamp2(ctx context.Context, dateTimeStr string) int64 {
 	dt, err := DateFormatStrToTime(ctx, dateTimeStr, DateFormatYYYYMMDDHHMMSS)

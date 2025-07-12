@@ -19,21 +19,3 @@ const (
 
 	ConfigRedisHost = "host"
 )
-
-type CID = string
-
-const (
-	CID_ID CID = "ID"
-	CID_MY CID = "MY"
-	CID_PH CID = "PH"
-	CID_SG CID = "SG"
-	CID_TH CID = "TH"
-	CID_TW CID = "TW"
-	CID_VN CID = "VN"
-)
-
-type ENV = string
-
-const (
-	ENV_TEST ENV = "TEST"
-)

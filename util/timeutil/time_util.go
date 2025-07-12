@@ -2,8 +2,6 @@ package timeutil
 
 import (
 	"context"
-	testutil2 "example.com/m/test/testutil"
-	"example.com/m/util/testutil"
 	"example.com/m/util/utilerror"
 	"fmt"
 	"strconv"
@@ -42,8 +40,8 @@ func TimeStampTotTime(ctx context.Context, timestamp int64) time.Time {
 
 func getTimeZone(ctx context.Context) *time.Location {
 	//return time.FixedZone(cid, TimeZoneMap[cid])
-	cid := testutil2.GetValueByCtxString(ctx, testutil.ContextKeyCid)
-	timeZone, _ := time.LoadLocation(TimeZoneIDMap[cid])
+	//cid := testutil2.GetValueByCtxString(ctx, testutil.ContextKeyCid)
+	timeZone, _ := time.LoadLocation(RegionID)
 	return timeZone
 }
 
