@@ -3,10 +3,10 @@ package esclient
 import (
 	"context"
 	"encoding/json"
+	testutil2 "example.com/m/test/testutil"
 	"example.com/m/util/convert"
 	"example.com/m/util/copier"
 	"example.com/m/util/printhelper"
-	"example.com/m/util/testutil"
 	"example.com/m/util/utilerror"
 	"fmt"
 	"github.com/olivere/elastic/v7"
@@ -22,10 +22,7 @@ var (
 )
 
 func init() {
-	ctx = testutil.NewContext(testutil.NewContextRequest{
-		Cid: testutil.CID_ID,
-		Env: testutil.ENV_TEST,
-	})
+	ctx = testutil2.NewContext(testutil2.NewContextRequest{})
 	esClient = NewEsClient()
 }
 
@@ -84,7 +81,7 @@ func Test_EsAdd(t *testing.T) {
 	Convey("EsAdd", t, func() {
 		Convey("EsAdd test1", func() {
 			var list []*AttendanceClockRecordStatisticTab
-			db := testutil.GetDBCommon(ctx)
+			db := testutil2.GetDBCommon(ctx)
 			limit := 10
 			err := db.Table("attendance_clock_record_statistic_tab").Order("id desc").Limit(limit).Find(&list).Error
 			So(err, ShouldEqual, nil)
@@ -126,7 +123,7 @@ func compareAndAdd() *utilerror.UtilError {
 	for {
 		printhelper.Println("offset:", idGt)
 		var list []*AttendanceClockRecordStatisticTab
-		db := testutil.GetDBCommon(ctx)
+		db := testutil2.GetDBCommon(ctx)
 		err := db.Table("attendance_clock_record_statistic_tab").Where("id > ?", idGt).Order("id asc").Limit(limit).Find(&list).Error
 		if err != nil {
 			return utilerror.NewError(err.Error())

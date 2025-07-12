@@ -10,55 +10,19 @@ import (
 type NewContextRequest struct {
 	Host   string
 	Cookie string
-	Cid    string
-	Env    string
 }
 
 type ContextKey string
 
 const (
-	ContextKeyHost           ContextKey = "key_host"
-	ContextKeyCookie         ContextKey = "key_cookie"
-	ContextKeyWorkforceDbId  ContextKey = "key_workforce_db_id"
-	ContextKeyNetworkDbId    ContextKey = "key_network_db_id"
-	ContextKeyBasicDbId      ContextKey = "key_basic_db_id"
-	ContextKeyCid            ContextKey = "key_cid"
-	ContextKeyClockInBuffer  ContextKey = "Key_clock_in_buffer"
-	ContextKeyClockOutBuffer ContextKey = "Key_clock_out_buffer"
-	ContextKeyNeedLog        ContextKey = "Key_need_log"
-	ContextKeyEnv            ContextKey = "Key_env"
-	ContextSQLCommon         ContextKey = "Key_sql_common"
-	ContextRedisCommon       ContextKey = "Key_redis_common"
+	ContextKeyNeedLog  ContextKey = "Key_need_log"
+	ContextSQLCommon   ContextKey = "Key_sql_common"
+	ContextRedisCommon ContextKey = "Key_redis_common"
 )
-
-var cid2WorkforceDbIdMap = map[string]int64{
-	CID_ID: 2043,
-	CID_MY: 2044,
-	CID_PH: 2045,
-	CID_SG: 2046,
-	CID_TH: 2047,
-	CID_TW: 2048,
-	CID_VN: 2049,
-}
-
-var cid2NetworkDbIdMap = map[string]int64{
-	CID_VN: 4895,
-}
-
-var cid2BasicDbIdMap = map[string]int64{
-	CID_MY: 3301,
-}
 
 func NewContext(req NewContextRequest) context.Context {
 	ctx := context.Background()
-	ctx = context.WithValue(ctx, ContextKeyHost, req.Host)
-	ctx = context.WithValue(ctx, ContextKeyCookie, req.Cookie)
-	ctx = context.WithValue(ctx, ContextKeyWorkforceDbId, cid2WorkforceDbIdMap[req.Cid])
-	ctx = context.WithValue(ctx, ContextKeyNetworkDbId, cid2NetworkDbIdMap[req.Cid])
-	ctx = context.WithValue(ctx, ContextKeyBasicDbId, cid2BasicDbIdMap[req.Cid])
-	ctx = context.WithValue(ctx, ContextKeyCid, req.Cid)
 	ctx = context.WithValue(ctx, ContextKeyNeedLog, true)
-	ctx = context.WithValue(ctx, ContextKeyEnv, req.Env)
 	ctx = bindMySQLContext(ctx, mysqlclient.InitDB(&mysqlclient.MySQLConfig{
 		Host:         GetStringConfig(ctx, ModuleMysql, ConfigMysqlHost),
 		Port:         GetInt64Config(ctx, ModuleMysql, ConfigMysqlPort),
@@ -109,14 +73,6 @@ func SetInt64ValueToCtx(ctx context.Context, key ContextKey, value int64) contex
 
 func SetBoolValueToCtx(ctx context.Context, key ContextKey, value bool) context.Context {
 	return context.WithValue(ctx, key, value)
-}
-
-func GetCid(ctx context.Context) string {
-	return GetValueByCtxString(ctx, ContextKeyCid)
-}
-
-func GetEnv(ctx context.Context) string {
-	return GetValueByCtxString(ctx, ContextKeyEnv)
 }
 
 func DisableLog(ctx context.Context) context.Context {

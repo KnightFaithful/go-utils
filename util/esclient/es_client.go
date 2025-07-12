@@ -3,10 +3,10 @@ package esclient
 import (
 	"context"
 	"encoding/json"
+	testutil2 "example.com/m/test/testutil"
 	"example.com/m/util/copier"
 	"example.com/m/util/printhelper"
 	"example.com/m/util/stringutil"
-	"example.com/m/util/testutil"
 	"example.com/m/util/timeutil"
 	"example.com/m/util/utilerror"
 	"fmt"
@@ -21,7 +21,7 @@ type EsClient struct {
 
 func NewEsClient() *EsClient {
 	ctx := context.Background()
-	host := testutil.GetStringConfig(ctx, testutil.ModuleEs, testutil.ConfigESHost)
+	host := testutil2.GetStringConfig(ctx, testutil2.ModuleEs, testutil2.ConfigESHost)
 	esClient, err := elastic.DialContext(ctx,
 		elastic.SetSniff(false),
 		elastic.SetURL([]string{host}...))

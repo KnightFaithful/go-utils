@@ -2,7 +2,7 @@ package timeutil
 
 import (
 	"context"
-	"example.com/m/util/testutil"
+	"example.com/m/test/testutil"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
