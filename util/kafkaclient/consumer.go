@@ -11,7 +11,7 @@ func singleConsumer() {
 	config.Consumer.Return.Errors = true
 
 	// 创建消费者
-	consumer, err := sarama.NewConsumer([]string{"xxx"}, config)
+	consumer, err := sarama.NewConsumer([]string{"zzz"}, config)
 	if err != nil {
 		log.Fatalf("消费者创建失败: %v", err)
 	}
