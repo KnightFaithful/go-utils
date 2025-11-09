@@ -7,6 +7,7 @@ replace github.com/360EntSecGroup-Skylar/excelize/v2 => github.com/xuri/excelize
 require (
 	github.com/IBM/sarama v1.45.2
 	github.com/ahmetb/go-linq/v3 v3.2.0
+	github.com/emirpasic/gods/v2 v2.0.0-alpha
 	github.com/olivere/elastic/v7 v7.0.32
 	github.com/redis/go-redis/v9 v9.11.0
 	github.com/shopspring/decimal v1.4.0
