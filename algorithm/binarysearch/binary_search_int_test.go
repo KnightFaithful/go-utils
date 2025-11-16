@@ -15,9 +15,10 @@ func Test_BinarySearchInt(t *testing.T) {
 			}
 			list = []int{0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
 			for i, n := range list {
-				So(-BinarySearchInt(list, n-1)+1, ShouldEqual, i)
+				So(-BinarySearchInt(list, n-1)-1, ShouldEqual, i)
 			}
-			fmt.Println(-BinarySearchInt(list, 5) + 1)
+			res := BinarySearchInt(list, 5)
+			fmt.Println(res, -res-1)
 		})
 	})
 }
